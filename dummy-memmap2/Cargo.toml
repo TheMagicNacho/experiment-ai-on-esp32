@@ -1,0 +1,11 @@
+[package]
+name = "memmap2"
+version = "0.9.5" # Match the version being used by candle
+edition = "2021"
+
+[dependencies]
+stable_deref_trait = "1.2.0"
+
+[features]
+default = ["stable_deref_trait"]
+stable_deref_trait = []
