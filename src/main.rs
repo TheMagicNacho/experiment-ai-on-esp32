@@ -1,7 +1,5 @@
-// Expose our custom mmap module to replace memmap2
 pub mod mmap;
 
-// Trick the candle library into using our mmap module instead of memmap2
 #[allow(unused_imports)]
 use crate::mmap as memmap2;
 
