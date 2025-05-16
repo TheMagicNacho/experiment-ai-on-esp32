@@ -7,11 +7,10 @@ use crate::mmap as memmap2;
 
 use candle_core::{Device, Result, Tensor};
 
-
-const LAYER1_WEIGHT: &[u8] = include_bytes!("../model/layer1_weight.bin");
-const LAYER1_BIAS: &[u8] = include_bytes!("../model/layer1_bias.bin");
-const LAYER2_WEIGHT: &[u8] = include_bytes!("../model/layer2_weight.bin");
-const LAYER2_BIAS: &[u8] = include_bytes!("../model/layer2_bias.bin");
+// const LAYER1_WEIGHT: &[u8] = include_bytes!("../model/layer1_weight.bin");
+// const LAYER1_BIAS: &[u8] = include_bytes!("../model/layer1_bias.bin");
+// const LAYER2_WEIGHT: &[u8] = include_bytes!("../model/layer2_weight.bin");
+// const LAYER2_BIAS: &[u8] = include_bytes!("../model/layer2_bias.bin");
 
 #[derive(Debug)]
 struct Model {
@@ -58,22 +57,22 @@ fn main() -> Result<()> {
     log::info!("TMN: Using device: {:?}", device);
 
     // Creating a dummy model
-    // let weight = Tensor::randn(0f32, 1.0, (784, 100), &device)?;
-    // let bias = Tensor::randn(0f32, 1.0, (100,), &device)?;
-    // let first = Linear { weight, bias };
-    // let weight = Tensor::randn(0f32, 1.0, (100, 10), &device)?;
-    // let bias = Tensor::randn(0f32, 1.0, (10,), &device)?;
-    // let second = Linear { weight, bias };
+    let weight = Tensor::randn(0f32, 1.0, (784, 50), &device)?;
+    let bias = Tensor::randn(0f32, 1.0, (50,), &device)?;
+    let first = Linear { weight, bias };
+    let weight = Tensor::randn(0f32, 1.0, (50, 10), &device)?;
+    let bias = Tensor::randn(0f32, 1.0, (10,), &device)?;
+    let second = Linear { weight, bias };
 
-    let first = Linear {
-        weight: Tensor::from_slice(LAYER1_WEIGHT, (784, 100), &device)?,
-        bias: Tensor::from_slice(LAYER1_BIAS, (100,), &device)?,
-    };
-
-    let second = Linear {
-        weight: Tensor::from_slice(LAYER2_WEIGHT, (100, 10), &device)?,
-        bias: Tensor::from_slice(LAYER2_BIAS, (10,), &device)?,
-    };
+    // let first = Linear {
+    //     weight: Tensor::from_slice(LAYER1_WEIGHT, (784, 100), &device)?,
+    //     bias: Tensor::from_slice(LAYER1_BIAS, (100,), &device)?,
+    // };
+    //
+    // let second = Linear {
+    //     weight: Tensor::from_slice(LAYER2_WEIGHT, (100, 10), &device)?,
+    //     bias: Tensor::from_slice(LAYER2_BIAS, (10,), &device)?,
+    // };
 
     let model = Model { first, second };
     log::info!("Model: {:?}", model);
